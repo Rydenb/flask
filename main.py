@@ -33,6 +33,11 @@ from api.post import post_api  # Import the social media post API
 from api.congrats_api import congrats_api  # Import the congrats API
 from api.profile_game import profile_game_api  # CS Pathway Game profile persistence
 from api.snapshot_proxy import snapshot_proxy
+# SDRM API endpoints
+from api.service import service_api
+from api.volunteer import volunteer_api
+from api.contact import contact_api
+from api.newsletter import newsletter_api
 #from api.announcement import announcement_api ##temporary revert
 
 # database Initialization functions
@@ -50,7 +55,12 @@ from model.skill_snapshot import SkillSnapshot
 from model.post import Post, init_posts
 from model.microblog import MicroBlog, Topic, initMicroblogs
 from model.leaderboard import ScoreCounterEvent, ElementaryLeaderboardEvent
-from hacks.jokes import initJokes 
+from hacks.jokes import initJokes
+# SDRM models
+from model.service import Service, initServices
+from model.volunteer import VolunteerSignup, initVolunteerSignups
+from model.contact import ContactMessage, initContactMessages
+from model.newsletter import NewsletterSubscriber, initNewsletterSubscribers
 # from model.announcement import Announcement ##temporary revert
 
 # server only Views
@@ -94,6 +104,11 @@ app.register_blueprint(post_api)  # Register the social media post API
 app.register_blueprint(congrats_api)  # Register the congrats message API
 app.register_blueprint(profile_game_api)  # CS Pathway Game profile persistence
 app.register_blueprint(snapshot_proxy)  # Register the snapshot proxy API
+# SDRM APIs
+app.register_blueprint(service_api)  # Get Help Now services
+app.register_blueprint(volunteer_api)  # Volunteer form
+app.register_blueprint(contact_api)  # Contact form
+app.register_blueprint(newsletter_api)  # Footer newsletter signup
 # app.register_blueprint(announcement_api) ##temporary revert
 
 # Jokes file initialization
@@ -360,6 +375,10 @@ def generate_data():
     initMicroblogs()
     initPersonas()
     initPersonaUsers()
+    initServices()
+    initVolunteerSignups()
+    initContactMessages()
+    initNewsletterSubscribers()
 
 # Register the custom command group with the Flask application
 app.cli.add_command(custom_cli)
